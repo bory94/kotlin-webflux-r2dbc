@@ -1,0 +1,46 @@
+server:
+  port: 443
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:certificate.p12
+    key-store-password: kotlinr2dbc
+
+spring:
+  datasource:
+    initialization-mode: always
+
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/r2dbc_test?useUnicode=true&characterEncoding=utf8&tlsVersion=TLSv1.2
+    username: root
+    password: root
+
+  messages:
+    basename: messages/messages
+
+cache-config:
+  caffeine:
+    caches:
+      blog:
+        expiration: 5 # minutes
+        maximumSize: 100000
+      account:
+        expiration: 10 # minutes
+        maximumSize: 100000
+
+security:
+  jwt:
+    secret: jwtsecretkeypublicandprivatekeysareincluded
+    access-token-timeout: 60 # minutes
+    refresh-token-timeout: 30 # days
+
+logging:
+  level:
+    com.bory: debug
+    java.sql: debug
+    org.springframework.r2dbc: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

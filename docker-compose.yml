@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  redis-standalone:
+    image: redis:6.2.6
+    container_name: redis-standalone
+    hostname: redis-standalone
+    restart: unless-stopped
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+    command: redis-server /data/redis.conf
